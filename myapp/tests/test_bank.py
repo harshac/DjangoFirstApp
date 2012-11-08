@@ -24,11 +24,10 @@ class BankTest(TestCase):
 
     def test_is_valid_account(self):
         user = Mock(spec = User)
-        account = Mock(spec = Account)
-        account.account_no = 'HB-4321'
+        account = Account(account_no='HBJJJJ-4321')
         self.bank = Bank(user, account)
 
-        self.assertTrue(self.bank.validate_account_number())
+        self.assertFalse(self.bank.validate_account_number())
 
     def test_is_validate(self):
         bank = Mock(spec = Bank)
