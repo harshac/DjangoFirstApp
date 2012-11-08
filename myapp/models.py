@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms import ModelForm
 from django.core.exceptions import ObjectDoesNotExist
+import re
 
 class User(models.Model):
     name = models.CharField(max_length=30)
@@ -27,6 +28,11 @@ class User(models.Model):
     def __unicode__(self):
         return self.name
 
+class Account(models.Model):
+    account_no = models.CharField(max_length=7)
+    user = models.ForeignKey('User')
 
+    def is_valid(self):
+       return re.match(r"[A-Z][A-Z]-\d+$",self.account_no) != None
 
 
