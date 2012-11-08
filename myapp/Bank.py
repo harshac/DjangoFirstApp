@@ -14,4 +14,5 @@ class Bank(object):
     def validate_account_number(self):
         return self.account.is_valid()
 
-
+    def validate_age_and_account(self):
+        return self.validate_account_number() and self.validate_age()

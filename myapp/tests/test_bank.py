@@ -1,7 +1,7 @@
 from django.test import TestCase
-from myapp.Bank import Bank
+from myapp.bank import Bank
 from myapp.models import Account, User
-from mock import Mock
+from mock import Mock, patch
 
 class BankTest(TestCase):
 
@@ -29,3 +29,15 @@ class BankTest(TestCase):
         self.bank = Bank(user, account)
 
         self.assertTrue(self.bank.validate_account_number())
+
+    def test_is_validate(self):
+        bank = Mock(spec = Bank)
+        mock_account = Mock(spec=Account)
+        mock_account.account_no='HJ-8989'
+        bank.account = mock_account
+        bank_validate_method_patch_age = patch('myapp.bank.Bank.validate_age')
+        bank_validate_method_mock =  bank_validate_method_patch_age.start()
+
+        bank_validate_method_mock.return_value = True
+
+        self.assertTrue(bank.validate_age_and_account())
